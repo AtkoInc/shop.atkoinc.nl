@@ -2,7 +2,7 @@
 <widget id="app.atkoinc.shop" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Atko shop</name>
     <description>
-        This is demo application for Okta inc.
+        This is demo application for Shopping Tomorrow on behalf of Okta inc.
     </description>
     <author email="frank.benus@okta.com" href="http://www.okta.com">
         Frank Benus - Okta inc.

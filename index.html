@@ -6,10 +6,19 @@
 -->
 <html>
 	<head>
-		<title>Verti by HTML5 UP</title>
+		<title>Atko inc :: webshop</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Adding in required libraries -->
+		<script src="assets/js/general.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+		<!-- end libraries -->
+		<style>
+			.cnt_homeBanner {
+				display: none;
+			}
+		</style>
 	</head>
 	<body class="is-preload homepage">
 		<div id="page-wrapper">
@@ -20,34 +29,31 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="index.html">Verti</a></h1>
-								<span>by HTML5 UP</span>
+								<h1><a href="index.html">Atko shop</a></h1>
+								<span>by Okta inc</span>
 							</div>
 
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li class="current"><a href="index.html">Welcome</a></li>
+									<li class="current"><a href="index.html">Home</a></li>
 									<li>
-										<a href="#">Dropdown</a>
+										<a href="#">Products</a>
 										<ul>
-											<li><a href="#">Lorem ipsum dolor</a></li>
-											<li><a href="#">Magna phasellus</a></li>
+											<li><a href="#">Books</a></li>
 											<li>
-												<a href="#">Phasellus consequat</a>
+												<a href="#">Movies and game</a>
 												<ul>
-													<li><a href="#">Lorem ipsum dolor</a></li>
-													<li><a href="#">Phasellus consequat</a></li>
-													<li><a href="#">Magna phasellus</a></li>
-													<li><a href="#">Etiam dolore nisl</a></li>
+													<li><a href="#">Playstation</a></li>
+													<li><a href="#">XBox</a></li>
+													<li><a href="#">Commodore 64</a></li>
+													<li><a href="#">Super Nintendo</a></li>
 												</ul>
 											</li>
-											<li><a href="#">Veroeros feugiat</a></li>
+											<li><a href="#">Electronics</a></li>
 										</ul>
 									</li>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
+									<li><a href="no-sidebar.html">Login</a></li>
 								</ul>
 							</nav>
 
@@ -57,18 +63,34 @@
 			<!-- Banner -->
 				<div id="banner-wrapper">
 					<div id="banner" class="box container">
-						<div class="row">
+						<!-- Start Banner for unknown user -->
+						<div id="cnt_noAuth" class="row cnt_homeBanner">
 							<div class="col-7 col-12-medium">
-								<h2>Hi. This is Verti.</h2>
-								<p>It's a free responsive site template by HTML5 UP</p>
+								<h2>Welcome to Atko Shop</h2>
+								<p>A demo brought to you by Okta</p>
 							</div>
 							<div class="col-5 col-12-medium">
 								<ul>
-									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Ok let's go</a></li>
-									<li><a href="#" class="button alt large icon solid fa-question-circle">More info</a></li>
+									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Login</a></li>
+									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Register</a></li>
 								</ul>
 							</div>
 						</div>
+						<!-- End Banner for unknown user -->
+						<!-- Start Banner for authenticated user -->
+						<div id="cnt_Auth" class="row cnt_homeBanner">
+							<div class="col-7 col-12-medium">
+								<h2>Welcome <span class="displayName">[name]</span></h2>
+								<p>A demo brought to you by Okta</p>
+							</div>
+							<div class="col-5 col-12-medium">
+								<ul>
+									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Order</a></li>
+									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Banner for authenticated user -->
 					</div>
 				</div>
 
@@ -83,10 +105,11 @@
 										<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
-												<h2>Put something here</h2>
-												<p>Maybe here as well I think</p>
+												<h2>Sony X556TX-33</h2>
+												<p>Model year 2024</p>
 											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+											<p>This latest model is now available for pre-order, and will blow you mind. The 128K resolution and 200 mega pixel camera ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right">Go see</a></p>
 										</div>
 									</section>
 
@@ -98,10 +121,11 @@
 										<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
-												<h2>An interesting title</h2>
-												<p>This is also an interesting subtitle</p>
+												<h2>Audi XST3 GT</h2>
+												<p>Tomorrows future on four wheels</p>
 											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+											<p>The latest addition to the XST family at Audi and never as fast as this one. Offered with a online only 'no test-drive' discount ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right">Buy now</a></p>
 										</div>
 									</section>
 
@@ -113,10 +137,11 @@
 										<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
-												<h2>Oh, and finally ...</h2>
-												<p>Here's another intriguing subtitle</p>
+												<h2>Harry Potter part 21</h2>
+												<p>Arnold Schwarzenegger's latest novel</p>
 											</header>
-											<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+											<p>As Arnold took over authoring the series, this deep space story line takes you beyond you have ever seen before. Dive into ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right">Quick buy</a></p>
 										</div>
 									</section>
 
@@ -134,7 +159,7 @@
 								<!-- Sidebar -->
 									<div id="sidebar">
 										<section class="widget thumbnails">
-											<h3>Interesting stuff</h3>
+											<h3>Newest products</h3>
 											<div class="grid">
 												<div class="row gtr-50">
 													<div class="col-6"><a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a></div>
@@ -153,10 +178,8 @@
 								<!-- Content -->
 									<div id="content">
 										<section class="last">
-											<h2>So what's this all about?</h2>
-											<p>This is <strong>Verti</strong>, a free and fully responsive HTML5 site template by <a href="http://html5up.net">HTML5 UP</a>.
-											Verti is released under the <a href="http://html5up.net/license">Creative Commons Attribution license</a>, so feel free to use it for any personal or commercial project you might have going on (just don't forget to credit us for the design!)</p>
-											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit amet phasellus quam turpis.</p>
+											<h2>This demo brings CIAM to the next level</h2>
+											<p>With a web and mobile experience, this webshop demo will demonstrate the ultimate experience for retail. As a customer authentication will be equaly easy on web as on mobile and security will be top nodge.</p>
 											<a href="#" class="button icon solid fa-arrow-circle-right">Continue Reading</a>
 										</section>
 									</div>
@@ -174,7 +197,7 @@
 
 								<!-- Links -->
 									<section class="widget links">
-										<h3>Random Stuff</h3>
+										<h3>Random link</h3>
 										<ul class="style2">
 											<li><a href="#">Etiam feugiat condimentum</a></li>
 											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
@@ -189,7 +212,7 @@
 
 								<!-- Links -->
 									<section class="widget links">
-										<h3>Random Stuff</h3>
+										<h3>More Stuff</h3>
 										<ul class="style2">
 											<li><a href="#">Etiam feugiat condimentum</a></li>
 											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
@@ -204,7 +227,7 @@
 
 								<!-- Links -->
 									<section class="widget links">
-										<h3>Random Stuff</h3>
+										<h3>And also ...</h3>
 										<ul class="style2">
 											<li><a href="#">Etiam feugiat condimentum</a></li>
 											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
@@ -227,20 +250,11 @@
 											<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
 											<li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
 										</ul>
-										<p>1234 Fictional Road<br />
-										Nashville, TN 00000<br />
-										(800) 555-0000</p>
+										<p><a target="_blank" href="http://stackoverflow.com">555 Fake Address<br />
+										Someville, XX 00000<br />
+										(555) 999-0000</a></p>
 									</section>
 
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-									</ul>
-								</div>
 							</div>
 						</div>
 					</footer>
@@ -259,3 +273,49 @@
 
 	</body>
 </html>
+<script>
+	$(document).ready(function(){
+		writeLog('-> Document is ready');
+		if (checkSession() == true) {
+			$("#cnt_Auth").css('display','flex'); 
+			$("#cnt_noAuth").hide(); 
+		} else {
+			$("#cnt_Auth").hide(); 
+			$("#cnt_noAuth").css('display','flex'); 
+		};
+	})
+
+
+	document.addEventListener('deviceready', onDeviceReady, false);
+
+	function onDeviceReady() {
+
+	    // Mock device.platform property if not available
+	    if (!window.device) {
+	        window.device = { platform: 'Browser' };
+	    }
+
+	    handleExternalURLs();
+	}
+
+	function handleExternalURLs() {
+	    // Handle click events for all external URLs
+	    if (device.platform.toUpperCase() === 'ANDROID') {
+	        $(document).on('click', 'a[href^="http"]', function (e) {
+	            var url = $(this).attr('href');
+	            navigator.app.loadUrl(url, { openExternal: true });
+	            e.preventDefault();
+	        });
+	    }
+	    else if (device.platform.toUpperCase() === 'IOS') {
+	        $(document).on('click', 'a[href^="http"]', function (e) {
+	            var url = $(this).attr('href');
+	            window.open(url, '_system');
+	            e.preventDefault();
+	        });
+	    }
+	    else {
+	        // Leave standard behaviour
+	    }
+	}
+</script>
