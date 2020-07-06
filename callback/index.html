@@ -1,0 +1,64 @@
+<html>
+	<head>
+	    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js'></script>
+		<script src='../assets/js/pkce.js'></script>
+		<script src='../assets/js/general.js'></script>
+		<script src='https://code.jquery.com/jquery-3.2.1.min.js' crossorigin='anonymous'></script>		
+	</head>
+	<script>
+		var authorisationCode = getParameterByName('code');
+		writeLog('code = '+ authorisationCode);
+		if (authorisationCode) {
+			var settings = {
+			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
+			  'method': 'POST',
+			  'timeout': 0,
+			  'headers': {
+			    'Accept': 'application/json',
+			//    'Authorization': 'Basic e3tjbGllbnRJZH19Ont7Y2xpZW50U2VjcmV0fX0=',
+			    'Content-Type': 'application/x-www-form-urlencoded'
+			  },
+			  'data': {
+			    'client_id': localStorage.getItem('clientid'),
+			    'grant_type': 'authorization_code',
+			    'redirect_uri': localStorage.getItem('callbackurl'),
+			    'code_verifier': localStorage.getItem('codeverifier'),
+			    'code': authorisationCode
+			  }
+			};
+			$.ajax(settings)
+			.done(function (response) {
+			  console.log(response);
+			  if (response.access_token) {
+			  	writeLog('-> code returned an access token');
+			  	localStorage.setItem('access_token', response.access_token);
+			  	writeLog(response.access_token);
+			  } else {
+			  	alert('some error occurred on the access token');
+			  }
+			  if (response.id_token) {
+			  	writeLog('-> code returned an ID token');
+			  	localStorage.setItem('id_token', response.id_token);
+			  	writeLog(response.id_token);
+			  	window.location = '../index.html?message=login successful'
+			  } else {
+			  	alert('some error occurred on the id token');
+			  	window.location = '../index.html?message=login failed'
+			  }
+
+
+			})
+			.fail(function (response) {
+				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
+			});
+
+		} else {
+			writeLog('-> no code was found');
+		}
+
+	</script>
+	<body>
+		Loading ...
+	</body>
+</html>
+

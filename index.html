@@ -1,9 +1,13 @@
+<script>
+	localStorage.setItem('oktaurl', 'https://atkoshop.okta.com');
+	localStorage.setItem('portalurl', 'http://localhost:8000');
+	localStorage.setItem('logging', true);
+	localStorage.setItem('portalurl', 'http://localhost:8000');
+	localStorage.setItem('callbackurl', 'http://localhost:8000/callback');
+	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
+	localStorage.setItem('authorizationserver', 'default');	
+</script>
 <!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Atko inc :: webshop</title>
@@ -11,6 +15,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!-- Adding in required libraries -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+		<script src="assets/js/pkce.js"></script>
 		<script src="assets/js/general.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 		<!-- end libraries -->
@@ -71,7 +77,7 @@
 							</div>
 							<div class="col-5 col-12-medium">
 								<ul>
-									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Login</a></li>
+									<li><a id="btn_login" href="#" class="button large icon solid fa-arrow-circle-right">Login</a></li>
 									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Register</a></li>
 								</ul>
 							</div>
@@ -273,19 +279,46 @@
 
 	</body>
 </html>
+    <script>
+
+
+    </script>
 <script>
+	// Execute when document is ready
 	$(document).ready(function(){
 		writeLog('-> Document is ready');
-		if (checkSession() == true) {
+		
+		// Set welcome header according to Okta session
+		var session = checkSession(); 
+		if (session == true) {
 			$("#cnt_Auth").css('display','flex'); 
 			$("#cnt_noAuth").hide(); 
 		} else {
 			$("#cnt_Auth").hide(); 
 			$("#cnt_noAuth").css('display','flex'); 
 		};
+		// Display message
+		var message = getParameterByName('message');
+		if (message) {
+			alert(message);
+		}
+	})
+
+	// Execute when login button is pushed
+	$("#btn_login").click(function() {
+		var codeVerifier = generateCodeVerifier();
+		var codeChallenge = generateCodeChallenge(codeVerifier);
+		localStorage.setItem('codeverifier', codeVerifier);
+		writeLog('codeVerifier = '+ codeVerifier);
+		writeLog('codeChallenge = '+ codeChallenge);
+		getAuthorisationCode(codeChallenge);
 	})
 
 
+
+
+
+	// Phonegap garbage!
 	document.addEventListener('deviceready', onDeviceReady, false);
 
 	function onDeviceReady() {
@@ -318,4 +351,7 @@
 	        // Leave standard behaviour
 	    }
 	}
+
+
+
 </script>
