@@ -32,14 +32,14 @@
 			  if (response.access_token) {
 			  	writeLog('-> code returned an access token');
 			  	localStorage.setItem('access_token', response.access_token);
-			  	writeLog(response.access_token);
+			  	writeLog(parseJwt(response.access_token));
 			  } else {
 			  	alert('some error occurred on the access token');
 			  }
 			  if (response.id_token) {
 			  	writeLog('-> code returned an ID token');
 			  	localStorage.setItem('id_token', response.id_token);
-			  	writeLog(response.id_token);
+			  	writeLog(parseJwt(response.id_token));
 			  	window.location = '../index.html?message=login successful'
 			  } else {
 			  	alert('some error occurred on the id token');

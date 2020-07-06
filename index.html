@@ -5,7 +5,8 @@
 	localStorage.setItem('portalurl', 'http://localhost:8000');
 	localStorage.setItem('callbackurl', 'http://localhost:8000/callback');
 	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
-	localStorage.setItem('authorizationserver', 'default');	
+	localStorage.setItem('authorizationserver', 'default');
+	localStorage.setItem('scopes', 'openid profile');	
 </script>
 <!DOCTYPE HTML>
 <html>
@@ -59,7 +60,8 @@
 											<li><a href="#">Electronics</a></li>
 										</ul>
 									</li>
-									<li><a href="no-sidebar.html">Login</a></li>
+									<li><a id="btn_logout_menu" class="lnk_logout" href="#">logout</a></li>
+									<li><a id="btn_login_menu" class="lnk_login" href="#">Login</a></li>
 								</ul>
 							</nav>
 
@@ -69,6 +71,13 @@
 			<!-- Banner -->
 				<div id="banner-wrapper">
 					<div id="banner" class="box container">
+						<!-- Start Message content -->
+						<div id="" class="row">
+							<div class="col-7 col-12-medium messageLine">
+								<h4 id="lbl_message"></h4>
+							</div>
+						</div>
+						<!-- End Message content -->
 						<!-- Start Banner for unknown user -->
 						<div id="cnt_noAuth" class="row cnt_homeBanner">
 							<div class="col-7 col-12-medium">
@@ -77,7 +86,7 @@
 							</div>
 							<div class="col-5 col-12-medium">
 								<ul>
-									<li><a id="btn_login" href="#" class="button large icon solid fa-arrow-circle-right">Login</a></li>
+									<li><a id="btn_login" href="#" class="button large icon solid fa-arrow-circle-right lnk_login">Login</a></li>
 									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Register</a></li>
 								</ul>
 							</div>
@@ -86,13 +95,13 @@
 						<!-- Start Banner for authenticated user -->
 						<div id="cnt_Auth" class="row cnt_homeBanner">
 							<div class="col-7 col-12-medium">
-								<h2>Welcome <span class="displayName">[name]</span></h2>
+								<h2>Welcome <span class="lbl_displayName">[name]</span></h2>
 								<p>A demo brought to you by Okta</p>
 							</div>
 							<div class="col-5 col-12-medium">
 								<ul>
 									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Order</a></li>
-									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Logout</a></li>
+									<li><a id="btn_logout" href="#" class="button alt large icon solid fa-arrow-circle-right lnk_logout">Logout</a></li>
 								</ul>
 							</div>
 						</div>
@@ -146,7 +155,7 @@
 												<h2>Harry Potter part 21</h2>
 												<p>Arnold Schwarzenegger's latest novel</p>
 											</header>
-											<p>As Arnold took over authoring the series, this deep space story line takes you beyond you have ever seen before. Dive into ...</p><br>
+											<p>As Arnold took over authoring the series, this deep space story line takes you beyond you have ever seen before...</p><br>
 											<p><a href="#" class="button icon solid fa-arrow-circle-right">Quick buy</a></p>
 										</div>
 									</section>
@@ -287,25 +296,34 @@
 	// Execute when document is ready
 	$(document).ready(function(){
 		writeLog('-> Document is ready');
-		
+
+		var jwt_validity = validateToken('id_token');
 		// Set welcome header according to Okta session
-		var session = checkSession(); 
-		if (session == true) {
+		if (jwt_validity == true) {
 			$("#cnt_Auth").css('display','flex'); 
-			$("#cnt_noAuth").hide(); 
+			$("#cnt_noAuth").hide();
+			$("#btn_logout_menu").css('display','inline'); 
+			$("#btn_login_menu").hide();
+			$(".lbl_displayName").text(localStorage.getItem('jwt_id_name')) 
 		} else {
 			$("#cnt_Auth").hide(); 
 			$("#cnt_noAuth").css('display','flex'); 
+			$("#btn_login_menu").css('display','inline'); 
+			$("#btn_logout_menu").hide();
 		};
+
 		// Display message
 		var message = getParameterByName('message');
 		if (message) {
-			alert(message);
+			$("#lbl_message").text(message);
+		} else {
+			$("#lbl_message").text('');
 		}
+
 	})
 
-	// Execute when login button is pushed
-	$("#btn_login").click(function() {
+	// Execute when login button is clicked
+	$(".lnk_login").click(function() {
 		var codeVerifier = generateCodeVerifier();
 		var codeChallenge = generateCodeChallenge(codeVerifier);
 		localStorage.setItem('codeverifier', codeVerifier);
@@ -314,7 +332,13 @@
 		getAuthorisationCode(codeChallenge);
 	})
 
-
+	// Execute when logout is clicked
+	$(".lnk_logout").click(function() {
+		writeLog('-> logout the user from app and Okta');
+		trashToken('access_token');
+		trashToken('id_token');
+		window.location = 'index.html'
+	})
 
 
 
