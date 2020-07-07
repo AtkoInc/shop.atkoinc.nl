@@ -42,16 +42,19 @@
 			  	writeLog('-> code returned an ID token');
 			  	localStorage.setItem('id_token', response.id_token);
 			  	writeLog(parseJwt(response.id_token));
-			  	window.location = '../index.html?message=login successful'
+//			  	window.location = '../index.html?message=login successful'
+				alert('1');
 			  } else {
 			  	alert('some error occurred on the id token');
-			  	window.location = '../index.html?message=login failed'
+//			  	window.location = '../index.html?message=login failed'
+				alert('2');
 			  }
 
 
 			})
 			.fail(function (response) {
-				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
+//				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
+				alert('3');
 			});
 
 		} else {
