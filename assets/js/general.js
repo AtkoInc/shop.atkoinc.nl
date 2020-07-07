@@ -41,7 +41,8 @@ function parseJwt(token) {
 // ------------------------------------------------------------------------------------------
 
 	function getAuthorisationCode(codeChallenge) {
-		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalurl')+'/callback&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
+		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('callbackurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
+		alert('codeUrl: '+ codeUrl);
 		window.location = codeUrl
 	}
 
