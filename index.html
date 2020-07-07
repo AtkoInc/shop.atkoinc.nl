@@ -8,6 +8,8 @@
 	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
 	localStorage.setItem('authorizationserver', 'default');
 	localStorage.setItem('scopes', 'openid profile');
+
+
 </script>
 <!DOCTYPE HTML>
 <html>
@@ -28,6 +30,11 @@
 				display: none;
 			}
 		</style>
+		<script type="text/javascript">
+		var authorisationCode = getParameterByName('code');
+		alert('authorisationCode:'+authorisationCode);
+
+		</script>
 	</head>
 	<body class="is-preload homepage">
 		<div id="page-wrapper">
