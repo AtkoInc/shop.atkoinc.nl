@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="app.atkoinc.shop" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="app://atkoinc.shop" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Atko shop</name>
     <description>
         This is demo application for Shopping Tomorrow on behalf of Okta inc.
@@ -13,6 +13,7 @@
     <plugin name="cordova-plugin-inappbrowser" source="npm" />
     <plugin name="cordova-plugin-camera" source="npm" />
     <plugin name="cordova.plugins.diagnostic" source="npm" />
+    <plugin name="cordova-plugin-customurlscheme" source="npm" />
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
