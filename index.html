@@ -31,12 +31,12 @@
 			}
 		</style>
 		<script type="text/javascript">
-		var authorisationCode = getParameterByName('code');
-		alert('authorisationCode:'+authorisationCode);
+
 
 		</script>
 	</head>
 	<body class="is-preload homepage">
+		<a href="#" id="btn_code">code zien !!!</a>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -349,6 +349,11 @@
 		window.location = 'index.html'
 	})
 
+	// Execute on code view
+	$("#btn_code").click(function() {
+		var authorisationCode = getParameterByName('code');
+		alert('authorisationCode:'+authorisationCode);
+	})
 
 
 	// Phonegap garbage!
