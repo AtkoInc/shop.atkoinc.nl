@@ -303,8 +303,22 @@
 	// Execute on reopen
 	function handleOpenURL(url) {
 	  setTimeout(function() {
-	    getParameterFromString(url, 'name');
-	    alert("code found: " + url);
+	  // console.log the url
+	  console.log('the url that the app returned to:'+url)
+	  	// process authorization code
+	    var code = getParameterFromString(url, 'code');
+	    if (code) {
+		    writeLog('code = '+ authorisationCode);
+		    alert("code found: " + code);
+
+	    }
+	    var message = getParameterFromString(url, 'message');
+	    if (message) {
+	    // Display message
+			$("#lbl_message").text(message);
+		} else {
+			$("#lbl_message").text('');
+	    }
 	  }, 0);
 	}
 
@@ -328,13 +342,7 @@
 			$("#btn_logout_menu").hide();
 		};
 
-		// Display message
-		var message = getParameterByName('message');
-		if (message) {
-			$("#lbl_message").text(message);
-		} else {
-			$("#lbl_message").text('');
-		}
+
 
 	})
 

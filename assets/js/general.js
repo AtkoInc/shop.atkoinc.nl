@@ -53,9 +53,62 @@ function parseJwt(token) {
 // ------------------------------------------------------------------------------------------
 
 	function getAuthorisationCode(codeChallenge) {
-		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('callbackurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
+		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
 		alert('codeUrl: '+ codeUrl);
 		window.location = codeUrl
+	}
+
+	function getTokensWithCode(authorisationCode) {
+		if (authorisationCode) {
+			var settings = {
+			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
+			  'method': 'POST',
+			  'timeout': 0,
+			  'headers': {
+			    'Accept': 'application/json',
+			    'Content-Type': 'application/x-www-form-urlencoded'
+			  },
+			  'data': {
+			    'client_id': localStorage.getItem('clientid'),
+			    'grant_type': 'authorization_code',
+			    'redirect_uri': localStorage.getItem('portalurl'),
+			    'code_verifier': localStorage.getItem('codeverifier'),
+			    'code': authorisationCode
+			  }
+			};
+			$.ajax(settings)
+			.done(function (response) {
+			  console.log(response);
+			  if (response.access_token) {
+			  	writeLog('-> code returned an access token');
+			  	localStorage.setItem('access_token', response.access_token);
+			  	writeLog(parseJwt(response.access_token));
+			  } else {
+			  	alert('some error occurred on the access token');
+			  }
+			  if (response.id_token) {
+			  	writeLog('-> code returned an ID token');
+			  	localStorage.setItem('id_token', response.id_token);
+			  	writeLog(parseJwt(response.id_token));
+			  	window.location = '../index.html?message=login successful'
+				alert('1');
+			  } else {
+			  	alert('some error occurred on the id token');
+			  	window.location = '../index.html?message=login failed'
+				alert('2');
+			  }
+
+
+			})
+			.fail(function (response) {
+//				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
+				alert('3');
+			});
+
+		} else {
+			writeLog('-> no code was found');
+		}
+
 	}
 
 	function validateToken(tokenType) {
