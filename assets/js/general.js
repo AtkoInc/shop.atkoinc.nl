@@ -21,6 +21,18 @@ function getParameterByName( name ) //courtesy Artem
     return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function getParameterFromString( urlString, name ) //courtesy Artem
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( urlString );
+  if( results == null )
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 function parseJwt(token) {
     if (token) {
 	    var base64Url = token.split('.')[1];
