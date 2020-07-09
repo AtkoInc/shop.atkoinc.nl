@@ -44,9 +44,17 @@ function parseJwt(token) {
     } else {
     	return false;
     }
-
-    
 };
+
+function processMessage(message) {
+    if (message) {
+    // Display message
+		writeLog('-> a message was found: '+ message);
+		$("#lbl_message").text(message);
+	} else {
+		$("#lbl_message").text('');
+    }
+}
 
 // ------------------------------------------------------------------------------------------
 // session management
@@ -54,7 +62,7 @@ function parseJwt(token) {
 
 	function getAuthorisationCode(codeChallenge) {
 		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
-		alert('codeUrl: '+ codeUrl);
+		writeLog('-> an authorisation code was found: '+ authorisationCode);
 		window.location = codeUrl
 	}
 
@@ -78,7 +86,7 @@ function parseJwt(token) {
 			};
 			$.ajax(settings)
 			.done(function (response) {
-			  console.log(response);
+			  writeLog(response);
 			  if (response.access_token) {
 			  	writeLog('-> code returned an access token');
 			  	localStorage.setItem('access_token', response.access_token);
@@ -91,18 +99,15 @@ function parseJwt(token) {
 			  	localStorage.setItem('id_token', response.id_token);
 			  	writeLog(parseJwt(response.id_token));
 			  	window.location = '../index.html?message=login successful'
-				alert('1');
 			  } else {
 			  	alert('some error occurred on the id token');
 			  	window.location = '../index.html?message=login failed'
-				alert('2');
 			  }
 
 
 			})
 			.fail(function (response) {
-//				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
-				alert('3');
+				window.location = '../index.html?message=Okta returned an error while exchanging the code for a token, please try again'
 			});
 
 		} else {
@@ -120,18 +125,14 @@ function parseJwt(token) {
 			// validate exp
 			var currentTimeStamp = Date.now() / 1000
 			var expValidity = jwt_idToken.exp > currentTimeStamp
-			
-			writeLog('now: '+currentTimeStamp);
-			writeLog('jwt expires: '+jwt_idToken.exp);
-
-			writeLog('-> token validity = ' + expValidity +' (for user: '+ jwt_idToken.name +')')
+			writeLog('-> the token validity is ' + expValidity +' (for user: '+ jwt_idToken.name +')')
 			// store data in localStorage
 			var jwt_id_name = jwt_idToken.name;
 			writeLog(jwt_idToken);
 			localStorage.setItem('jwt_id_name', jwt_id_name);
 
 		} else {
-			writeLog('some shit went down');
+			expValidity = false
 		}
 		return expValidity;
 	}

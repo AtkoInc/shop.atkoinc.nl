@@ -1,5 +1,6 @@
 function generateCodeVerifier() {
     var code_verifier = generateRandomString(128)
+    writeLog('-> a code code_verifier was generated: '+ code_verifier)
     return code_verifier
 }
 function generateRandomString(length) {
@@ -11,7 +12,9 @@ function generateRandomString(length) {
     return text;
 }
 function generateCodeChallenge(code_verifier) {
-    return code_challenge = base64URL(CryptoJS.SHA256(code_verifier))
+    var code_challenge = base64URL(CryptoJS.SHA256(code_verifier));
+    writeLog('-> a code code_challenge was generated: '+ code_challenge);
+    return code_challenge 
 }
 
 function base64URL(string) {

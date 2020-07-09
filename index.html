@@ -1,13 +1,12 @@
 <script>
 	localStorage.setItem('oktaurl', 'https://atkoshop.okta.com');
 	localStorage.setItem('logging', true);
-//	localStorage.setItem('portalurl', 'http://localhost:8000');
-//	localStorage.setItem('callbackurl', 'http://localhost:8000');
-	localStorage.setItem('portalurl', 'atkoinc://app.shop');
-//	localStorage.setItem('callbackurl', 'atkoinc://app.shop/callback/index.html');
+	localStorage.setItem('portalurl', 'http://localhost:8000');
+//	localStorage.setItem('portalurl', 'atkoinc://app.shop');
 	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
 	localStorage.setItem('authorizationserver', 'default');
 	localStorage.setItem('scopes', 'openid profile');
+
 
 
 </script>
@@ -300,33 +299,48 @@
 
     </script>
 <script>
-	// Execute on reopen
-	function handleOpenURL(url) {
-	  setTimeout(function() {
-	  // console.log the url
-	  console.log('the url that the app returned to:'+url)
-	  	// process authorization code
-	    var code = getParameterFromString(url, 'code');
-	    if (code) {
-		    writeLog('code = '+ authorisationCode);
-		    alert("code found: " + code);
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent))
+{
+   alert('A: '+ navigator.userAgent);
+}
+else
+{
+   alert('B: '+navigator.userAgent);
+}
 
-	    }
-	    var message = getParameterFromString(url, 'message');
-	    if (message) {
-	    // Display message
-			$("#lbl_message").text(message);
-		} else {
-			$("#lbl_message").text('');
-	    }
-	  }, 0);
+	if (localStorage.getItem('portalurl').startsWith('http://')) {
+		writeLog('-> the app seems to run in test mode on localhost')
+		// execute on desktop while testing
+		var authorisationCode = getParameterByName('code');
+		var message = getParameterByName('message');
+		  	if (authorisationCode) {
+		    	getTokensWithCode(authorisationCode);
+		  	}
+		  	if (message) {
+		  		processMessage(message);
+		  	}
+	} else {
+		// Execute on mobile on return from idp
+		writeLog('-> the app seems to run as a native mobile app')
+		function handleOpenURL(url) {
+		  setTimeout(function() {
+		  	// process authorization code
+		  	var authorisationCode = getParameterFromString(url, 'code');
+		  	var message = getParameterFromString(url, 'message');
+		  	if (authorisationCode) {
+		    	getTokensWithCode(authorisationCode);
+		  	}
+		  	if (message) {
+		  		processMessage(message);
+		  	}
+		  }, 0);
+		}
 	}
 
 
 	// Execute when document is ready
 	$(document).ready(function(){
-		writeLog('-> Document is ready');
-
+		writeLog('-> document is ready');
 		var jwt_validity = validateToken('id_token');
 		// Set welcome header according to Okta session
 		if (jwt_validity == true) {
@@ -335,11 +349,13 @@
 			$("#btn_logout_menu").css('display','inline'); 
 			$("#btn_login_menu").hide();
 			$(".lbl_displayName").text(localStorage.getItem('jwt_id_name')) 
+			writeLog('-> a valid id_token is present in localStorage');
 		} else {
 			$("#cnt_Auth").hide(); 
 			$("#cnt_noAuth").css('display','flex'); 
 			$("#btn_login_menu").css('display','inline'); 
 			$("#btn_logout_menu").hide();
+			writeLog('-> there is no valid id_token present in localStorage');
 		};
 
 
@@ -351,8 +367,6 @@
 		var codeVerifier = generateCodeVerifier();
 		var codeChallenge = generateCodeChallenge(codeVerifier);
 		localStorage.setItem('codeverifier', codeVerifier);
-		writeLog('codeVerifier = '+ codeVerifier);
-		writeLog('codeChallenge = '+ codeChallenge);
 		getAuthorisationCode(codeChallenge);
 	})
 
