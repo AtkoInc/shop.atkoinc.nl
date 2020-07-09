@@ -347,10 +347,17 @@
 		window.location = 'index.html'
 	})
 
+	function handleOpenURL(url) {
+	  setTimeout(function() {
+	    alert("received url: " + url);
+	  }, 0);
+	}
+
 	// Execute on code view
 	$("#btn_code").click(function() {
 		var authorisationCode = getParameterByName('code');
 		alert('authorisationCode:'+authorisationCode);
+		handleOpenURL()
 	})
 
 
