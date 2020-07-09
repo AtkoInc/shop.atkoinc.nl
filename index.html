@@ -320,6 +320,7 @@
 		// Execute on mobile on return from idp
 		writeLog('-> the app seems to run as a native mobile app')
 		function handleOpenURL(url) {
+			alert(url)
 		  setTimeout(function() {
 		  	// process authorization code
 		  	var authorisationCode = getParameterFromString(url, 'code');
