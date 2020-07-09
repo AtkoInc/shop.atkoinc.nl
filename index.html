@@ -1,15 +1,3 @@
-<script>
-	localStorage.setItem('oktaurl', 'https://atkoshop.okta.com');
-	localStorage.setItem('logging', true);
-	localStorage.setItem('portalurl', 'http://localhost:8000');
-//	localStorage.setItem('portalurl', 'atkoinc://app.shop');
-	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
-	localStorage.setItem('authorizationserver', 'default');
-	localStorage.setItem('scopes', 'openid profile');
-
-
-
-</script>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -299,14 +287,23 @@
 
     </script>
 <script>
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent))
-{
-   alert('A: '+ navigator.userAgent);
-}
-else
-{
-   alert('B: '+navigator.userAgent);
-}
+	// Setting glabal parameters
+	localStorage.setItem('oktaurl', 'https://atkoshop.okta.com');
+	localStorage.setItem('logging', true);
+	localStorage.setItem('clientid', '0oa59y3coG6TSfX08416');
+	localStorage.setItem('authorizationserver', 'default');
+	localStorage.setItem('scopes', 'openid profile');
+
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent))
+	{
+		writeLog('-> user is on mobile');
+		localStorage.setItem('portalurl', 'atkoinc://app.shop');
+	}
+	else
+	{
+		writeLog('-> user is on desktop');
+		localStorage.setItem('portalurl', 'http://localhost:8000');
+	}
 
 	if (localStorage.getItem('portalurl').startsWith('http://')) {
 		writeLog('-> the app seems to run in test mode on localhost')
