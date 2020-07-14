@@ -297,12 +297,14 @@
 	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent))
 	{
 		writeLog('-> user is on mobile');
-		localStorage.setItem('portalurl', 'atkoinc://com.okta.atkoshop');
+		localStorage.setItem('portalurl', 'com.okta.atkoshop');
+		localStorage.setItem('portalcallbackurl', 'com.okta.atkoshop:/callback');
 	}
 	else
 	{
 		writeLog('-> user is on desktop');
 		localStorage.setItem('portalurl', 'http://localhost:8000');
+		localStorage.setItem('portalcallbackurl', 'http://localhost:8000/callback');
 	}
 
 	if (localStorage.getItem('portalurl').startsWith('http://')) {

@@ -61,12 +61,13 @@ function processMessage(message) {
 // ------------------------------------------------------------------------------------------
 
 	function getAuthorisationCode(codeChallenge) {
-		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
+		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalcallbackurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
 		writeLog('-> an authorisation code was found: '+ authorisationCode);
 		window.location = codeUrl
 	}
 
 	function getTokensWithCode(authorisationCode) {
+		writeLog('-> getting tokens with the code ('+  +')')
 		if (authorisationCode) {
 			var settings = {
 			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
@@ -79,7 +80,7 @@ function processMessage(message) {
 			  'data': {
 			    'client_id': localStorage.getItem('clientid'),
 			    'grant_type': 'authorization_code',
-			    'redirect_uri': localStorage.getItem('portalurl'),
+			    'redirect_uri': localStorage.getItem('portalcallbackurl'),
 			    'code_verifier': localStorage.getItem('codeverifier'),
 			    'code': authorisationCode
 			  }
