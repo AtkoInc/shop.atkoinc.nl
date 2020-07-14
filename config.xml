@@ -12,6 +12,10 @@
     <plugin name="cordova-plugin-dialogs" source="npm" />
     <plugin name="cordova-plugin-inappbrowser" source="npm" />
     <plugin name="cordova-plugin-camera" source="npm" />
+    <plugin name="cordova.plugins.diagnostic" source="npm" />
+        <gap:plugin name="cordova-plugin-customurlscheme" source="npm">
+  		<param name="URL_SCHEME" value="com.okta.atkoshop" />
+	</gap:plugin>
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
