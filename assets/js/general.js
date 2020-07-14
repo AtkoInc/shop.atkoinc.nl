@@ -62,12 +62,12 @@ function processMessage(message) {
 
 	function getAuthorisationCode(codeChallenge) {
 		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalcallbackurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
-		writeLog('-> getting an authorisation here: '+ codeUrl);
+		alert('-> getting an authorisation here: '+ codeUrl);
 		window.location = codeUrl
 	}
 
 	function getTokensWithCode(authorisationCode) {
-		writeLog('-> getting tokens with the code ('+  +')')
+		alert('-> getting tokens with the code ('+  +')')
 		if (authorisationCode) {
 			var settings = {
 			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
