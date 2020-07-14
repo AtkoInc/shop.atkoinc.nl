@@ -11,6 +11,15 @@
 		<script src="assets/js/pkce.js"></script>
 		<script src="assets/js/general.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+		window.addEventListener('load', function () {
+		  $(document).on('click', 'a[target="_system"],a[target="_blank"]', function (e) {
+		    e.preventDefault();
+		    var url = this.href;
+		    window.open(url,"_system");
+		  });
+		}, false);
+		</script>
 		<!-- end libraries -->
 		<style>
 			.cnt_homeBanner {
@@ -118,7 +127,7 @@
 												<p>Model year 2024</p>
 											</header>
 											<p>This latest model is now available for pre-order, and will blow you mind. The 128K resolution and 200 mega pixel camera ...</p><br>
-											<p><a href="#" class="button icon solid fa-arrow-circle-right">Go see</a></p>
+											<p><a href="https://www.okta.com" target="_system" class="button icon solid fa-arrow-circle-right">Go see</a></p>
 										</div>
 									</section>
 
