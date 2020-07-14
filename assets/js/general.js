@@ -100,10 +100,10 @@ function processMessage(message) {
 			  	alert('-> code returned an ID token');
 			  	localStorage.setItem('id_token', response.id_token);
 			  	writeLog(parseJwt(response.id_token));
-			  	window.location = localStorage.getItem('portalcallbackurl') + '?message=login successful'
+			  	window.location = localStorage.getItem('portalurl') + '?message=login successful'
 			  } else {
 			  	alert('some error occurred on the id token');
-			  	window.location = localStorage.getItem('portalcallbackurl') + '?message=login failed'
+			  	window.location = localStorage.getItem('portalurl') + '?message=login failed'
 			  }
 
 
@@ -113,7 +113,7 @@ function processMessage(message) {
 			});
 
 		} else {
-			writeLog('-> no code was found');
+			alert('-> no code was found');
 		}
 
 	}
