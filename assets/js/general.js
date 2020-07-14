@@ -67,7 +67,7 @@ function processMessage(message) {
 	}
 
 	function getTokensWithCode(authorisationCode) {
-		alert('-> getting tokens with the code ('+  +')')
+		alert('-> getting tokens with the code ('+ authorisationCode +')')
 		if (authorisationCode) {
 			var settings = {
 			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
@@ -87,22 +87,23 @@ function processMessage(message) {
 			};
 			$.ajax(settings)
 			.done(function (response) {
-			  writeLog(response);
+			  alert(response);
 			  if (response.access_token) {
-			  	writeLog('-> code returned an access token');
+			  	alert('-> code returned an access token');
 			  	localStorage.setItem('access_token', response.access_token);
 			  	writeLog(parseJwt(response.access_token));
+			  	alert(response.access_token);
 			  } else {
 			  	alert('some error occurred on the access token');
 			  }
 			  if (response.id_token) {
-			  	writeLog('-> code returned an ID token');
+			  	alert('-> code returned an ID token');
 			  	localStorage.setItem('id_token', response.id_token);
 			  	writeLog(parseJwt(response.id_token));
-			  	window.location = '../index.html?message=login successful'
+			  	window.location = localStorage.getItem('portalcallbackurl') + '?message=login successful'
 			  } else {
 			  	alert('some error occurred on the id token');
-			  	window.location = '../index.html?message=login failed'
+			  	window.location = localStorage.getItem('portalcallbackurl') + '?message=login failed'
 			  }
 
 
