@@ -320,11 +320,11 @@
 		  	}
 	} else {
 		// Execute on mobile on return from idp
-		alert('-> the app seems to run as a native mobile app')
+		writeLog('-> the app seems to run as a native mobile app')
 		function handleOpenURL(url) {
-			alert(url)
 		  setTimeout(function() {
 		  	// process authorization code
+			alert(url)
 		  	var authorisationCode = getParameterFromString(url, 'code');
 		  	var message = getParameterFromString(url, 'message');
 		  	if (authorisationCode) {
