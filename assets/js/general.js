@@ -93,7 +93,7 @@ function openUrl(url, readerMode) {
 	  })			  
 	} else {
       alert('-> SafariViewController is not defined')
-      window.open(url);
+      window.open(url, '_self', 'location=yes');
   }
 
 }
