@@ -56,41 +56,48 @@ function processMessage(message) {
     }
 }
 
-  function openUrl(url, readerMode) {
-    SafariViewController.isAvailable(function (available) {
-      if (available) {
-        SafariViewController.show({
-              url: url,
-              hidden: false, // default false
-              animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
-              transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
-              enterReaderModeIfAvailable: readerMode, // default false
-              barColor: "#0000ff", // default is white (iOS 10 only)
-              tintColor: "#ffffff" // default is ios blue
-            },
-            function(result) {
-              if (result.event === 'opened') {
-                console.log('opened');
-              } else if (result.event === 'loaded') {
-                console.log('loaded');
-//                SafariViewController.hide();
-              } else if (result.event === 'closed') {
-                console.log('closed');
-              }
-            },
-            function(msg) {
-              console.log("KO: " + JSON.stringify(msg));
-            })
-      } else {
-        // potentially powered by InAppBrowser because that (currently) clobbers window.open
-        window.open(url /*, '_blank', 'location=yes'*/);
-      }
-    })
-  }
+function openUrl(url, readerMode) {
+	if(typeof SafariViewController !== "undefined") {
+		alert('SafariViewController is defined')
+		SafariViewController.isAvailable(function (available) {
+			if (available) {
+				SafariViewController.show({
+					url: url,
+					hidden: false, // default false
+					animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
+					transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
+					enterReaderModeIfAvailable: readerMode, // default false
+					barColor: "#0000ff", // default is white (iOS 10 only)
+					tintColor: "#ffffff" // default is ios blue
+				},
+				function(result) {
+					if (result.event === 'opened') {
+						console.log('opened');
+					} else if (result.event === 'loaded') {
+						console.log('loaded');
+			//                SafariViewController.hide();
+					} else if (result.event === 'closed') {
+						console.log('closed');
+					}
+				},
+				function(msg) {
+					console.log("KO: " + JSON.stringify(msg));
+				})
+			} else {
+				// potentially powered by InAppBrowser because that (currently) clobbers window.open
+				window.open(url, '_blank', 'location=yes');
+			}
+		})
 
-  function dismissSafari() {
-    SafariViewController.hide()
-  }
+	} else {
+		alert('SafariViewController is not defined')
+		window.open(url, '_self', 'location=yes');
+	}
+}
+
+function dismissSafari() {
+SafariViewController.hide()
+}
 
 
 // ------------------------------------------------------------------------------------------
