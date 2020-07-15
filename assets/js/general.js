@@ -67,8 +67,8 @@ function openUrl(url, readerMode) {
 					animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
 					transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
 					enterReaderModeIfAvailable: readerMode, // default false
-					barColor: "#ff4486", // default is white (iOS 10 only)
-					tintColor: "#ffffff" // default is ios blue
+					barColor: "#ff0000", // default is white (iOS 10 only)
+					tintColor: "#00ff00" // default is ios blue
 				},
 				function(result) {
 					if (result.event === 'opened') {

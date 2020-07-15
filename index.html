@@ -118,7 +118,7 @@
 												<p>Model year 2024</p>
 											</header>
 											<p>This latest model is now available for pre-order, and will blow you mind. The 128K resolution and 200 mega pixel camera ...</p><br>
-											<p><a href="https://www.okta.com" target="_system" class="button icon solid fa-arrow-circle-right">Go see</a></p>
+											<p><a target="_system" class="button icon solid fa-arrow-circle-right btn_product">Go see</a></p>
 										</div>
 									</section>
 
@@ -377,6 +377,11 @@
 		trashToken('access_token');
 		trashToken('id_token');
 		window.location = 'index.html'
+	})
+
+	// Execute when product is clicked
+	$(".btn_product").click(function() {
+		openUrl('http://app.okta-demo.nl/shop.html', false);
 	})
 
 </script>
