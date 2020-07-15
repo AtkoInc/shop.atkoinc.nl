@@ -1,69 +1,385 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<head>
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <title>Safari VC</title>
-  <script>
-    window.onerror = function (err, file, line) {
-      alert(err + ", " + line)
-    };
-  </script>
-</head>
-<body style="background: none; background-color: #ddd">
-<div class="app">
-  <h1>Safari VC</h1>
+	<head>
+		<title>Atko inc :: webshop</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Adding in required libraries -->
+	    <script src="cordova.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+		<script src="assets/js/pkce.js"></script>
+		<script src="assets/js/general.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+		<!-- end libraries -->
+		<style>
+			.cnt_homeBanner {
+				display: none;
+			}
+		</style>
+		<script type="text/javascript">
+		</script>
+	</head>
+	<body class="is-preload homepage">
+		<div id="page-wrapper">
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
 
-  <div id="deviceready" class="blink">
-    <p class="event listening">Connecting to Device</p>
+						<!-- Logo -->
+							<div id="logo">
+								<h1><a href="index.html">Atko shop</a></h1>
+								<span>by Okta inc</span>
+							</div>
 
-    <p class="event received">Device is Ready</p>
-    <br/>
-    <button onclick="openUrl('https://en.m.wikipedia.org/wiki/Safari', false)">Open Wikipedia</button><br/><br/>
-    <button onclick="openUrl('https://en.m.wikipedia.org/wiki/Safari', true)">Open Wikipedia in reader mode</button><br/><br/>
-    <button onclick="openUrl('https://en.m.wikipedia.org/wiki/Safari', false);setTimeout(dismissSafari, 10000)">Open Wikipedia, auto-dismiss after 10s</button>
-  </div>
-</div>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
-<script>
-  function openUrl(url, readerMode) {
-    SafariViewController.isAvailable(function (available) {
-      if (available) {
-        SafariViewController.show({
-              url: url,
-              hidden: false, // default false
-              animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
-              transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
-              enterReaderModeIfAvailable: readerMode, // default false
-              barColor: "#0000ff", // default is white (iOS 10 only)
-              tintColor: "#ffffff" // default is ios blue
-            },
-            function(result) {
-              if (result.event === 'opened') {
-                console.log('opened');
-              } else if (result.event === 'loaded') {
-                console.log('loaded');
-//                SafariViewController.hide();
-              } else if (result.event === 'closed') {
-                console.log('closed');
-              }
-            },
-            function(msg) {
-              console.log("KO: " + JSON.stringify(msg));
-            })
-      } else {
-        // potentially powered by InAppBrowser because that (currently) clobbers window.open
-        window.open(url /*, '_blank', 'location=yes'*/);
-      }
-    })
-  }
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="index.html">Home</a></li>
+									<li>
+										<a href="#">Products</a>
+										<ul>
+											<li><a href="#">Books</a></li>
+											<li>
+												<a href="#">Movies and game</a>
+												<ul>
+													<li><a href="#">Playstation</a></li>
+													<li><a href="#">XBox</a></li>
+													<li><a href="#">Commodore 64</a></li>
+													<li><a href="#">Super Nintendo</a></li>
+												</ul>
+											</li>
+											<li><a href="#">Electronics</a></li>
+										</ul>
+									</li>
+									<li><a id="btn_logout_menu" class="lnk_logout" href="#">logout</a></li>
+									<li><a id="btn_login_menu" class="lnk_login" href="#">Login</a></li>
+								</ul>
+							</nav>
 
-  function dismissSafari() {
-    SafariViewController.hide()
-  }
-</script>
-</body>
+					</header>
+				</div>
+
+			<!-- Banner -->
+				<div id="banner-wrapper">
+					<div id="banner" class="box container">
+						<!-- Start Message content -->
+						<div id="" class="row">
+							<div class="col-7 col-12-medium messageLine">
+								<h4 id="lbl_message"></h4>
+							</div>
+						</div>
+						<!-- End Message content -->
+						<!-- Start Banner for unknown user -->
+						<div id="cnt_noAuth" class="row cnt_homeBanner">
+							<div class="col-7 col-12-medium">
+								<h2>Welcome to Atko Shop</h2>
+								<p>A demo brought to you by Okta</p>
+							</div>
+							<div class="col-5 col-12-medium">
+								<ul>
+									<li><a id="btn_login" href="#" target="_self" class="button large icon solid fa-arrow-circle-right lnk_login">Login</a></li>
+									<li><a href="#" class="button alt large icon solid fa-arrow-circle-right">Register</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Banner for unknown user -->
+						<!-- Start Banner for authenticated user -->
+						<div id="cnt_Auth" class="row cnt_homeBanner">
+							<div class="col-7 col-12-medium">
+								<h2>Welcome <span class="lbl_displayName">[name]</span></h2>
+								<p>A demo brought to you by Okta</p>
+							</div>
+							<div class="col-5 col-12-medium">
+								<ul>
+									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Order</a></li>
+									<li><a id="btn_logout" href="#" class="button alt large icon solid fa-arrow-circle-right lnk_logout">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Banner for authenticated user -->
+					</div>
+				</div>
+
+			<!-- Features -->
+				<div id="features-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="assets/products/1.jpg" alt="" /></a>
+										<div class="inner">
+											<header>
+												<h2>Somy X556TX-33</h2>
+												<p>Model year 2024</p>
+											</header>
+											<p>This latest model is now available for pre-order, and will blow you mind. The 128K resolution and 200 mega pixel camera ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right btn_product">Go see</a></p>
+										</div>
+									</section>
+
+							</div>
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="assets/products/2.jpg" alt="" /></a>
+										<div class="inner">
+											<header>
+												<h2>Samsang XST3 GT</h2>
+												<p>Tomorrows future on the wall</p>
+											</header>
+											<p>The latest addition to the XST family at Samsang, comes with 1024K OW-LED. Offered with online-only discount ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right">Buy now</a></p>
+										</div>
+									</section>
+
+							</div>
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="assets/products/3.jpg" alt="" /></a>
+										<div class="inner">
+											<header>
+												<h2>GL 99TTS</h2>
+												<p>GL's top of the line 2023 model</p>
+											</header>
+											<p>The 4D effect allows you to smell the grass that you are seeing on screen, featuring over 200 built-in speakers ...</p><br>
+											<p><a href="#" class="button icon solid fa-arrow-circle-right">Quick buy</a></p>
+										</div>
+									</section>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-4 col-12-medium">
+
+								<!-- Sidebar -->
+									<div id="sidebar">
+										<section class="widget thumbnails">
+											<h3>Newest products</h3>
+											<div class="grid">
+												<div class="row gtr-50">
+													<div class="col-6"><a href="#" class="image fit"><img src="assets/products/4.jpg" alt="" /></a></div>
+													<div class="col-6"><a href="#" class="image fit"><img src="assets/products/3.jpg" alt="" /></a></div>
+													<div class="col-6"><a href="#" class="image fit"><img src="assets/products/2.jpg" alt="" /></a></div>
+													<div class="col-6"><a href="#" class="image fit"><img src="assets/products/1.jpg" alt="" /></a></div>
+												</div>
+											</div>
+											<a href="#" class="button icon fa-file-alt">More</a>
+										</section>
+									</div>
+
+							</div>
+							<div class="col-8 col-12-medium imp-medium">
+
+								<!-- Content -->
+									<div id="content">
+										<section class="last">
+											<h2>This demo brings CIAM to the next level</h2>
+											<p>With a web and mobile experience, this webshop demo will demonstrate the ultimate experience for retail. As a customer authentication will be equaly easy on web as on mobile and security will be top nodge, all served from a single code based for native mobile and web.</p>
+											<p>Please note that the Github repo will become available but is not to be used in production.</p>
+											<a href="#" class="button alt icon solid brands fa-github">Open Github</a>
+										</section>
+									</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>Random link</h3>
+										<ul class="style2">
+											<li><a onclick="openUrl('https://en.m.wikipedia.org/wiki/Safari', false)" href="#">website</a></li>
+											<li><a onclick="openUrl('https://en.m.wikipedia.org/wiki/Safari', true)" href="#">A book</a></li>
+											<li><a href="#">Sed porttitor cras in erat nec</a></li>
+											<li><a href="#">Felis varius pellentesque potenti</a></li>
+											<li><a href="#">Nullam scelerisque blandit leo</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>More Stuff</h3>
+										<ul class="style2">
+											<li><a href="#">Etiam feugiat condimentum</a></li>
+											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
+											<li><a href="#">Sed porttitor cras in erat nec</a></li>
+											<li><a href="#">Felis varius pellentesque potenti</a></li>
+											<li><a href="#">Nullam scelerisque blandit leo</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>And also ...</h3>
+										<ul class="style2">
+											<li><a href="#">Etiam feugiat condimentum</a></li>
+											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
+											<li><a href="#">Sed porttitor cras in erat nec</a></li>
+											<li><a href="#">Felis varius pellentesque potenti</a></li>
+											<li><a href="#">Nullam scelerisque blandit leo</a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Contact -->
+									<section class="widget contact last">
+										<h3>Contact Us</h3>
+										<ul>
+											<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+											<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+											<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+											<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+											<li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+										</ul>
+										<p><a target="_blank" href="http://stackoverflow.com">555 Fake Address<br />
+										Someville, XX 00000<br />
+										(555) 999-0000</a></p>
+									</section>
+
+							</div>
+						</div>
+					</footer>
+				</div>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>
+    <script>
+
+
+    </script>
+<script>
+	// Setting glabal parameters
+	localStorage.setItem('oktaurl', 'https://atkoshop.okta.com');
+	localStorage.setItem('logging', true);
+	localStorage.setItem('clientid', '0oa5i4euoIg19ZWRq416');
+	localStorage.setItem('authorizationserver', 'default');
+	localStorage.setItem('scopes', 'openid profile');
+
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent))
+	{
+		writeLog('-> user is on mobile');
+		localStorage.setItem('portalurl', 'com.okta.atkoshop');
+		localStorage.setItem('portalcallbackurl', 'com.okta.atkoshop:/callback');
+	}
+	else
+	{
+		writeLog('-> user is on desktop');
+		localStorage.setItem('portalurl', 'http://localhost:8000');
+		localStorage.setItem('portalcallbackurl', 'http://localhost:8000/callback');
+	}
+
+	if (localStorage.getItem('portalurl').startsWith('http://')) {
+		writeLog('-> the app seems to run in test mode on localhost')
+		// execute on desktop while testing
+		var authorisationCode = getParameterByName('code');
+		var message = getParameterByName('message');
+		  	if (authorisationCode) {
+		    	getTokensWithCode(authorisationCode);
+		  	}
+		  	if (message) {
+		  		processMessage(message);
+		  	}
+	} else {
+		// Execute on mobile on return from idp
+		writeLog('-> the app seems to run as a native mobile app')
+		function handleOpenURL(url) {
+		  setTimeout(function() {
+		  	// process authorization code
+			alert(url)
+		  	var authorisationCode = getParameterFromString(url, 'code');
+		  	var message = getParameterFromString(url, 'message');
+		  	if (authorisationCode) {
+		    	getTokensWithCode(authorisationCode);
+		  	}
+		  	if (message) {
+		  		processMessage(message);
+		  	}
+		  }, 0);
+		}
+	}
+
+
+	// Execute when document is ready
+	$(document).ready(function(){
+		writeLog('-> document is ready');
+		var jwt_validity = validateToken('id_token');
+		// Set welcome header according to Okta session
+		if (jwt_validity == true) {
+			$("#cnt_Auth").css('display','flex'); 
+			$("#cnt_noAuth").hide();
+			$("#btn_logout_menu").css('display','inline'); 
+			$("#btn_login_menu").hide();
+			$(".lbl_displayName").text(localStorage.getItem('jwt_id_name')) 
+			writeLog('-> a valid id_token is present in localStorage');
+		} else {
+			$("#cnt_Auth").hide(); 
+			$("#cnt_noAuth").css('display','flex'); 
+			$("#btn_login_menu").css('display','inline'); 
+			$("#btn_logout_menu").hide();
+			writeLog('-> there is no valid id_token present in localStorage');
+		};
+
+
+
+	})
+
+	// Execute when login button is clicked
+	$(".lnk_login").click(function() {
+		var codeVerifier = generateCodeVerifier();
+		var codeChallenge = generateCodeChallenge(codeVerifier);
+		localStorage.setItem('codeverifier', codeVerifier);
+		getAuthorisationCode(codeChallenge);
+	})
+
+	// Execute when logout is clicked
+	$(".lnk_logout").click(function() {
+		writeLog('-> logout the user from app and Okta');
+		trashToken('access_token');
+		trashToken('id_token');
+		window.location = 'index.html'
+	})
+
+	// Execute when product is clicked
+	$(".btn_product").click(function() {
+		openUrl('https://www.okta.com', true)
+	})
+
+</script>
