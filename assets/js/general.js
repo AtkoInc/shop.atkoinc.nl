@@ -58,7 +58,7 @@ function processMessage(message) {
 
 function openUrl(url, readerMode) {
   if (typeof youSafariViewControllerrvar !== 'undefined') {
-      writeLog('-> SafariViewController is defined')
+      alert('-> SafariViewController is defined')
 	  SafariViewController.isAvailable(function (available) {
 	    if (available) {
 	      writeLog('-> SafariViewController is available')
@@ -87,12 +87,12 @@ function openUrl(url, readerMode) {
 	          })
 	    } else {
 	      // potentially powered by InAppBrowser because that (currently) clobbers window.open
-	      writeLog('-> SafariViewController is not available')
+	      alert('-> SafariViewController is not available')
 	      window.open(url, '_blank', 'location=yes');
 	    }
 	  })			  
 	} else {
-      writeLog('-> SafariViewController is not defined')
+      alert('-> SafariViewController is not defined')
       window.open(url);
   }
 
