@@ -56,50 +56,6 @@ function processMessage(message) {
     }
 }
 
-function openUrl(url, readerMode) {
-	if(typeof SafariViewController !== "undefined") {
-		alert('SafariViewController is defined')
-		SafariViewController.isAvailable(function (available) {
-			if (available) {
-				SafariViewController.show({
-					url: encodeURI(url),
-					hidden: false, // default false
-					animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
-					transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
-					enterReaderModeIfAvailable: readerMode, // default false
-					barColor: "#ff0000", // default is white (iOS 10 only)
-					tintColor: "#00ff00" // default is ios blue
-				},
-				function(result) {
-					if (result.event === 'opened') {
-						console.log('opened');
-					} else if (result.event === 'loaded') {
-						console.log('loaded');
-			//                SafariViewController.hide();
-					} else if (result.event === 'closed') {
-						console.log('closed');
-					}
-				},
-				function(msg) {
-					console.log("KO: " + JSON.stringify(msg) + '|| '+ url);
-				})
-			} else {
-				// potentially powered by InAppBrowser because that (currently) clobbers window.open
-				window.open(url, '_self', 'location=yes');
-			}
-		})
-
-	} else {
-		alert('SafariViewController is not defined')
-		window.open(url, '_self', 'location=yes');
-	}
-}
-
-function dismissSafari() {
-SafariViewController.hide()
-}
-
-
 // ------------------------------------------------------------------------------------------
 // session management
 // ------------------------------------------------------------------------------------------
@@ -107,7 +63,7 @@ SafariViewController.hide()
 	function getAuthorisationCode(codeChallenge) {
 		var codeUrl = localStorage.getItem('oktaurl') + '/oauth2/'+ localStorage.getItem('authorizationserver') +'/v1/authorize?client_id='+ localStorage.getItem('clientid')  +'&response_type=code&scope='+ localStorage.getItem('scopes') +'&redirect_uri='+localStorage.getItem('portalcallbackurl')+'&state=x&nonce=y&code_challenge_method=S256&code_challenge='+ codeChallenge
 		alert('-> getting an authorisation here: '+ codeUrl);
-		window.open(url, '_self', 'location=yes'); 
+		window.open(codeUrl, '_self', 'location=yes'); 
 	}
 
 	function getTokensWithCode(authorisationCode) {
