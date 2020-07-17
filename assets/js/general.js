@@ -79,7 +79,7 @@ function processMessage(message) {
 	    	},
 		  headers: { 
 			Accept: 'application/json',
-			contentType: 'application/x-www-form-urlencoded',
+			ContentType: 'application/x-www-form-urlencoded',
 			Origin: 'http://localhost:8001'
 			}
 		};

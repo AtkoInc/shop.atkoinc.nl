@@ -379,7 +379,18 @@
 	})
 
 	// Execute when product is clicked
+
+
 	$(".btn_product").click(function() {
-		openUrl('http://app.okta-demo.nl/shop.html', false);
+cordova.plugin.http.post('https://idp.okta.antonherber.de/okta/hook/authzhook.php', {
+  test: 'testString'
+}, {
+  Authorization: 'OAuth2: token'
+}, function(response) {
+  alert(response.status);
+}, function(response) {
+  alert(response.error);
+});
+	//	openUrl('http://app.okta-demo.nl/shop.html', false);
 	})
 </script>
