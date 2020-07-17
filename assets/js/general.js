@@ -72,15 +72,16 @@ function processMessage(message) {
 		  method: 'post',
 		  data: { 	
 		  	client_id: localStorage.getItem('clientid'), 
-		  	grant_type: authorization_code,
+		  	grant_type: 'authorization_code',
 			redirect_uri: localStorage.getItem('portalcallbackurl'),
 			code_verifier: localStorage.getItem('codeverifier'),
 			code: authorisationCode
 	    	},
 		  headers: { 
 			Accept: 'application/json',
-			Content-Type: 'application/x-www-form-urlencoded',
+			contentType: 'application/x-www-form-urlencoded',
 			Origin: 'http://localhost:8001'
+			}
 		};
 		 
 		cordova.plugin.http.sendRequest('https://idp.okta.antonherber.de/okta/hook/authzhook.php', options, function(response) {
