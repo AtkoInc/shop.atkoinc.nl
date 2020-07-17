@@ -76,7 +76,8 @@ function processMessage(message) {
 			  'timeout': 0,
 			  'headers': {
 			    'Accept': 'application/json',
-			    'Content-Type': 'application/x-www-form-urlencoded'
+			    'Content-Type': 'application/x-www-form-urlencoded',
+			    'Origin': 'http://localhost:8001'
 			  },
 			  'data': {
 			    'client_id': localStorage.getItem('clientid'),
