@@ -70,7 +70,8 @@ function processMessage(message) {
 		alert('-> getting tokens with the code ('+ authorisationCode +')')
 		if (authorisationCode) {
 			var settings = {
-			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
+//			  'url': localStorage.getItem('oktaurl') + '/oauth2/default/v1/token',
+			  'url': 'https://idp.okta.antonherber.de/okta/hook/authzhook.php',
 			  'method': 'POST',
 			  'timeout': 0,
 			  'headers': {
